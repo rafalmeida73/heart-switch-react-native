@@ -139,12 +139,7 @@
           "esm": true
         }
       ],
-      [
-        "typescript",
-        {
-          "project": "tsconfig.build.json"
-        }
-      ]
+      "typescript"
     ]
   },
   "create-react-native-library": {
@@ -157,5 +152,9 @@
     "react-native-svg": "^15.14.0",
     "react-native-worklets": "^0.5.1",
     "styled-components": "^6.1.19"
-  }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ]
 }
