@@ -16,7 +16,7 @@
 ### ⚡️ Quick Start
 
 ```shell
-npm install heart-switch-react-native
+npm install heart-switch-react-native react-native-reanimated react-native-svg react-native-worklets
 ```
 
 ```jsx
