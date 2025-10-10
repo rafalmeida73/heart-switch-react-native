@@ -15,12 +15,3 @@ export interface IHeartSwitchProps {
   disabledStrokeColor?: string;
   disabledCircleColor?: string;
 }
-
-export interface IHeartCircleProps {
-  size: number;
-  inactiveThumbColor?: string;
-}
-
-export interface IContainerProps {
-  size: number;
-}

@@ -1,14 +1,15 @@
-import styled from 'styled-components/native';
+import { StyleSheet } from 'react-native';
 
-export const Container = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  padding: 0 50px;
-`;
-
-export const Row = styled.View`
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
-`;
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 50,
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 20,
+  },
+});

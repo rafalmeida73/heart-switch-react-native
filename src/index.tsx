@@ -8,10 +8,11 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 
-import { Container, Content, HeartCircle } from './styles';
+import { styles } from './styles';
 import type { IHeartSwitchProps } from './types';
 import { sizeToScale } from './utils/sizeToScale';
 import { HeartSvg } from './components/HeartSvg';
+import { TouchableOpacity, View } from 'react-native';
 
 export const HeartSwitch = ({
   size = 'md',
@@ -252,12 +253,25 @@ export const HeartSwitch = ({
   }, [checked, size]);
 
   return (
-    <Container size={selectedSize}>
-      <Content onPress={handlePress} disabled={disabled}>
+    <View
+      style={[
+        styles.container,
+        { width: 36 * selectedSize, height: 25 * selectedSize },
+      ]}
+    >
+      <TouchableOpacity onPress={handlePress} disabled={disabled}>
         <Animated.View style={animatedStyle}>
-          <HeartCircle
-            inactiveThumbColor={getColor.circleColor}
-            size={selectedSize}
+          <View
+            style={[
+              styles.heartCircle,
+              {
+                backgroundColor: getColor.circleColor,
+                top: 12 * selectedSize,
+                left: 12 * selectedSize,
+                width: 18 * selectedSize,
+                height: 18 * selectedSize,
+              },
+            ]}
           />
         </Animated.View>
         <HeartSvg
@@ -268,7 +282,7 @@ export const HeartSwitch = ({
           strokeColor={getColor.strokeColor}
           size={selectedSize}
         />
-      </Content>
-    </Container>
+      </TouchableOpacity>
+    </View>
   );
 };
