@@ -38,15 +38,15 @@ export const HeartSwitch = ({
       differenceY: 8,
     },
     md: {
-      translateX: -13,
-      translateY: 12.1,
+      translateX: -13.5,
+      translateY: 11.3,
       rotate: 5,
       scaleX: 1,
       differenceY: 12,
     },
     lg: {
-      translateX: -17.5,
-      translateY: 16,
+      translateX: -18,
+      translateY: 15.5,
       rotate: 5,
       scaleX: 1,
       differenceY: 16,
@@ -137,7 +137,7 @@ export const HeartSwitch = ({
       withTiming(2 * selectedSize, { duration: d25, easing }),
       withTiming(3 * selectedSize, { duration: d25, easing }),
       withTiming(4 * selectedSize, { duration: d25, easing }),
-      withTiming(5.9 * selectedSize, { duration: d50, easing })
+      withTiming(6.3 * selectedSize, { duration: d50, easing })
     );
   }, [
     d25,
