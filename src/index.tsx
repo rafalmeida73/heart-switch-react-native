@@ -39,7 +39,7 @@ export const HeartSwitch = ({
     },
     md: {
       translateX: -13,
-      translateY: 12.3,
+      translateY: 12.1,
       rotate: 5,
       scaleX: 1,
       differenceY: 12,
