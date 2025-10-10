@@ -49,7 +49,7 @@ export const HeartSwitch = ({
       translateY: 16,
       rotate: 5,
       scaleX: 1,
-      differenceY: 17,
+      differenceY: 16,
     },
   };
 
