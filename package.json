@@ -1,6 +1,6 @@
 {
   "name": "heart-switch-react-native",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "A heart-shaped toggle switch component for React Native.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -42,6 +42,7 @@
   },
   "keywords": [
     "react-native",
+    "expo",
     "ios",
     "android",
     "animated",
