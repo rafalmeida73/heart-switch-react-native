@@ -25,6 +25,7 @@ import { HeartSwitch } from 'heart-switch-react-native';
 
 function Example() {
   const [checked, setChecked] = useState(false);
+
   return (
     <HeartSwitch
       size="md"
@@ -36,6 +37,11 @@ function Example() {
   );
 }
 ```
+
+### 💻 Live Demo
+
+https://snack.expo.dev/@rafalmeida73/heart-switch-react-native
+
 
 ## ⚙️ Configuration
 
