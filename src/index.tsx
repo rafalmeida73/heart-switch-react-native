@@ -28,6 +28,7 @@ export const HeartSwitch = ({
   disabledCircleColor = '#f4f4f4',
   disabledFillColor = '#e1e1e1',
   disabledStrokeColor = '#c8c8c8',
+  initialAnimation = false,
 }: IHeartSwitchProps) => {
   const initialValues = {
     sm: {
@@ -242,15 +243,30 @@ export const HeartSwitch = ({
   });
 
   useEffect(() => {
-    if (checked) {
-      handleSetChecked();
+    if (checked && !initialAnimation) {
+      translateX.value = 6.3 * selectedSize;
+      translateY.value = -1.5 * selectedSize + initial.differenceY;
       setHeartChecked(true);
     } else {
-      handleSetUnchecked();
+      translateX.value = initial.translateX;
+      translateY.value = initial.translateY;
       setHeartChecked(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checked, size]);
+  }, [checked]);
+
+  useEffect(() => {
+    if (initialAnimation) {
+      if (checked) {
+        handleSetChecked();
+        setHeartChecked(true);
+      } else {
+        handleSetUnchecked();
+        setHeartChecked(false);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checked, size, initialAnimation]);
 
   return (
     <View

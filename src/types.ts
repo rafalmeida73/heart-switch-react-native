@@ -14,4 +14,5 @@ export interface IHeartSwitchProps {
   disabledFillColor?: string;
   disabledStrokeColor?: string;
   disabledCircleColor?: string;
+  initialAnimation?: boolean;
 }

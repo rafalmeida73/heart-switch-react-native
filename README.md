@@ -42,7 +42,6 @@ function Example() {
 
 https://snack.expo.dev/@rafalmeida73/heart-switch-react-native
 
-
 ## ⚙️ Configuration
 
 `HeartSwitch` supports the following props:
@@ -62,3 +61,4 @@ https://snack.expo.dev/@rafalmeida73/heart-switch-react-native
 | disabledCircleColor | string   | `#f4f4f4`     | Color of the circle when the switch is disabled                                                       |
 | disabledFillColor   | string   | `#e1e1e1`     | Background fill color when disabled                                                                   |
 | disabledStrokeColor | string   | `#c8c8c8`     | Border/stroke color when disabled                                                                     |
+| initialAnimation    | boolean  | `false`       | When true, enables animation on initial render or when checked prop changes programmatically          |
