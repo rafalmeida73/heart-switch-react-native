@@ -2,14 +2,23 @@
 import { HeartSwitch } from 'heart-switch-react-native';
 import { View } from 'react-native';
 import { styles } from './styles';
+import { useState } from 'react';
 
 export default function App() {
+  const [checked, setChecked] = useState(false);
+
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <HeartSwitch size="sm" checked />
         <HeartSwitch circleColor="#3bbbe8" />
-        <HeartSwitch size="lg" />
+        <HeartSwitch
+          size="lg"
+          checked={checked}
+          onChange={(event) => {
+            setChecked(event);
+          }}
+        />
       </View>
 
       <View style={[styles.row, { marginTop: 40 }]}>

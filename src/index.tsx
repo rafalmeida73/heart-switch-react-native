@@ -13,6 +13,7 @@ import type { IHeartSwitchProps } from './types';
 import { sizeToScale } from './utils/sizeToScale';
 import { HeartSvg } from './components/HeartSvg';
 import { TouchableOpacity, View } from 'react-native';
+import { scheduleOnRN } from 'react-native-worklets';
 
 export const HeartSwitch = ({
   size = 'md',
@@ -71,6 +72,13 @@ export const HeartSwitch = ({
   const scaleX = useSharedValue(initial.scaleX);
   const selectedSize = sizeToScale(size);
 
+  const handleCallOnChange = useCallback(
+    (newChecked: boolean) => {
+      onChange && onChange(newChecked);
+    },
+    [onChange]
+  );
+
   const getColor = useMemo(() => {
     return {
       fillColor: disabled ? disabledFillColor : fillColor,
@@ -87,148 +95,165 @@ export const HeartSwitch = ({
     disabledCircleColor,
   ]);
 
-  const handleSetChecked = useCallback(() => {
-    translateY.value = withSequence(
-      withTiming(initialTranslateY, { duration: 1 }),
-      withTiming(0.3 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(0.9 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(2 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(3 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(3 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(2 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(1 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(0 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(-1.5 * selectedSize + initial.differenceY, {
-        duration: d50,
-        easing,
-      })
-    );
+  const handleSetChecked = useCallback(
+    (newChecked: boolean) => {
+      translateY.value = withSequence(
+        withTiming(initialTranslateY, { duration: 1 }),
+        withTiming(0.3 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(0.9 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(2 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(3 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(3 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(2 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(1 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(0 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(-1.5 * selectedSize + initial.differenceY, {
+          duration: d50,
+          easing,
+        })
+      );
 
-    translateX.value = withSequence(
-      withTiming(initialTranslateX, { duration: 1 }),
-      withTiming(-9 * selectedSize, { duration: d25, easing }),
-      withTiming(-8 * selectedSize, { duration: d25, easing }),
-      withTiming(-6 * selectedSize, { duration: d25, easing }),
-      withTiming(-3 * selectedSize, { duration: d25, easing }),
-      withTiming(1 * selectedSize, { duration: d25, easing }),
-      withTiming(2 * selectedSize, { duration: d25, easing }),
-      withTiming(3 * selectedSize, { duration: d25, easing }),
-      withTiming(4 * selectedSize, { duration: d25, easing }),
-      withTiming(6.3 * selectedSize, { duration: d50, easing })
-    );
-  }, [
-    d25,
-    d50,
-    easing,
-    initial.differenceY,
-    initialTranslateX,
-    initialTranslateY,
-    selectedSize,
-    translateX,
-    translateY,
-  ]);
+      translateX.value = withSequence(
+        withTiming(initialTranslateX, { duration: 1 }),
+        withTiming(-9 * selectedSize, { duration: d25, easing }),
+        withTiming(-8 * selectedSize, { duration: d25, easing }),
+        withTiming(-6 * selectedSize, { duration: d25, easing }),
+        withTiming(-3 * selectedSize, { duration: d25, easing }),
+        withTiming(1 * selectedSize, { duration: d25, easing }),
+        withTiming(2 * selectedSize, { duration: d25, easing }),
+        withTiming(3 * selectedSize, { duration: d25, easing }),
+        withTiming(4 * selectedSize, { duration: d25, easing }),
+        withTiming(
+          6.3 * selectedSize,
+          {
+            duration: d50,
+            easing,
+          },
+          () => {
+            scheduleOnRN(handleCallOnChange, newChecked);
+          }
+        )
+      );
+    },
+    [
+      d25,
+      d50,
+      easing,
+      initial.differenceY,
+      initialTranslateX,
+      initialTranslateY,
+      handleCallOnChange,
+      selectedSize,
+      translateX,
+      translateY,
+    ]
+  );
 
-  const handleSetUnchecked = useCallback(() => {
-    translateY.value = withSequence(
-      withTiming(-1 * selectedSize + initial.differenceY, {
-        duration: d50,
-        easing,
-      }),
-      withTiming(0 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(1 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(2 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(3 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(3 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(2 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(0.9 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(0.3 * selectedSize + initial.differenceY, {
-        duration: d25,
-        easing,
-      }),
-      withTiming(initial.translateY, { duration: d50, easing })
-    );
+  const handleSetUnchecked = useCallback(
+    (newChecked: boolean) => {
+      translateY.value = withSequence(
+        withTiming(-1 * selectedSize + initial.differenceY, {
+          duration: d50,
+          easing,
+        }),
+        withTiming(0 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(1 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(2 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(3 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(3 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(2 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(0.9 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(0.3 * selectedSize + initial.differenceY, {
+          duration: d25,
+          easing,
+        }),
+        withTiming(initial.translateY, { duration: d50, easing })
+      );
 
-    translateX.value = withSequence(
-      withTiming(5.8 * selectedSize, { duration: d50, easing }),
-      withTiming(4 * selectedSize, { duration: d25, easing }),
-      withTiming(3 * selectedSize, { duration: d25, easing }),
-      withTiming(2 * selectedSize, { duration: d25, easing }),
-      withTiming(1 * selectedSize, { duration: d25, easing }),
-      withTiming(-3 * selectedSize, { duration: d25, easing }),
-      withTiming(-6 * selectedSize, { duration: d25, easing }),
-      withTiming(-8 * selectedSize, { duration: d25, easing }),
-      withTiming(-9 * selectedSize, { duration: d25, easing }),
-      withTiming(initial.translateX, { duration: d50, easing })
-    );
-  }, [
-    d25,
-    d50,
-    easing,
-    initial.differenceY,
-    initial.translateX,
-    initial.translateY,
-    selectedSize,
-    translateX,
-    translateY,
-  ]);
+      translateX.value = withSequence(
+        withTiming(5.8 * selectedSize, { duration: d50, easing }),
+        withTiming(4 * selectedSize, { duration: d25, easing }),
+        withTiming(3 * selectedSize, { duration: d25, easing }),
+        withTiming(2 * selectedSize, { duration: d25, easing }),
+        withTiming(1 * selectedSize, { duration: d25, easing }),
+        withTiming(-3 * selectedSize, { duration: d25, easing }),
+        withTiming(-6 * selectedSize, { duration: d25, easing }),
+        withTiming(-8 * selectedSize, { duration: d25, easing }),
+        withTiming(-9 * selectedSize, { duration: d25, easing }),
+        withTiming(initial.translateX, { duration: d50, easing }, () => {
+          scheduleOnRN(handleCallOnChange, newChecked);
+        })
+      );
+    },
+    [
+      d25,
+      d50,
+      easing,
+      initial.differenceY,
+      initial.translateX,
+      initial.translateY,
+      handleCallOnChange,
+      selectedSize,
+      translateX,
+      translateY,
+    ]
+  );
 
   const handlePress = useCallback(() => {
     const newChecked = !heartChecked;
     setHeartChecked(newChecked);
 
-    onChange && onChange(newChecked);
-
     if (newChecked) {
-      handleSetChecked();
+      handleSetChecked(newChecked);
     } else {
-      handleSetUnchecked();
+      handleSetUnchecked(newChecked);
     }
-  }, [handleSetChecked, handleSetUnchecked, heartChecked, onChange]);
+  }, [handleSetChecked, handleSetUnchecked, heartChecked]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -258,10 +283,10 @@ export const HeartSwitch = ({
   useEffect(() => {
     if (initialAnimation) {
       if (checked) {
-        handleSetChecked();
+        handleSetChecked(checked);
         setHeartChecked(true);
       } else {
-        handleSetUnchecked();
+        handleSetUnchecked(checked);
         setHeartChecked(false);
       }
     }
