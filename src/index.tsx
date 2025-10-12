@@ -253,7 +253,7 @@ export const HeartSwitch = ({
       setHeartChecked(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checked, size]);
+  }, [checked, size, initialAnimation]);
 
   useEffect(() => {
     if (initialAnimation) {
