@@ -30,6 +30,9 @@ export const HeartSwitch = ({
   disabledFillColor = '#e1e1e1',
   disabledStrokeColor = '#c8c8c8',
   initialAnimation = false,
+  containerProps,
+  buttonProps,
+  circleProps,
 }: IHeartSwitchProps) => {
   const initialValues = {
     sm: {
@@ -295,14 +298,21 @@ export const HeartSwitch = ({
 
   return (
     <View
+      {...containerProps}
       style={[
         styles.container,
         { width: 36 * selectedSize, height: 25 * selectedSize },
+        containerProps?.style,
       ]}
     >
-      <TouchableOpacity onPress={handlePress} disabled={disabled}>
+      <TouchableOpacity
+        onPress={handlePress}
+        disabled={disabled}
+        {...buttonProps}
+      >
         <Animated.View style={animatedStyle}>
           <View
+            {...circleProps}
             style={[
               styles.heartCircle,
               {
@@ -312,6 +322,7 @@ export const HeartSwitch = ({
                 width: 18 * selectedSize,
                 height: 18 * selectedSize,
               },
+              circleProps?.style,
             ]}
           />
         </Animated.View>

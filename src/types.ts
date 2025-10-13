@@ -1,3 +1,5 @@
+import type { TouchableOpacityProps, ViewProps } from 'react-native';
+
 export type Size = 'sm' | 'md' | 'lg';
 
 export interface IHeartSwitchProps {
@@ -15,4 +17,7 @@ export interface IHeartSwitchProps {
   disabledStrokeColor?: string;
   disabledCircleColor?: string;
   initialAnimation?: boolean;
+  containerProps?: ViewProps;
+  buttonProps?: TouchableOpacityProps;
+  circleProps?: ViewProps;
 }
