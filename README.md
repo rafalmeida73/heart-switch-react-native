@@ -1,7 +1,7 @@
 <br>
 
 <div align="center">
-  <img src="/ios.gif" alt="heart-switch Demo">
+  <img src="https://www.rafaelsantana.dev/img/heartSwitch/ios.gif" alt="heart-switch Demo">
 </div>
 
 <br>
