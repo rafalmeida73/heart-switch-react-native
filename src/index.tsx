@@ -304,11 +304,13 @@ export const HeartSwitch = ({
         { width: 36 * selectedSize, height: 25 * selectedSize },
         containerProps?.style,
       ]}
+      testID="heart-switch-container"
     >
       <TouchableOpacity
         onPress={handlePress}
         disabled={disabled}
         {...buttonProps}
+        testID="heart-switch-button"
       >
         <Animated.View style={animatedStyle}>
           <View
