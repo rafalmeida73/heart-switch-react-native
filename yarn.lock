@@ -1597,13 +1597,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/config-conventional@npm:^19.8.1":
-  version: 19.8.1
-  resolution: "@commitlint/config-conventional@npm:19.8.1"
+"@commitlint/config-conventional@npm:^20.0.0":
+  version: 20.0.0
+  resolution: "@commitlint/config-conventional@npm:20.0.0"
   dependencies:
-    "@commitlint/types": ^19.8.1
+    "@commitlint/types": ^20.0.0
     conventional-changelog-conventionalcommits: ^7.0.2
-  checksum: f17e855b7293391655b7d05cf2e0ed43f5d03e48ad050a19c2a21ef1fc6516e8b9f2a386ed53ce93a2d2edc4464fc5081319710bd9134ec6feb6ccfcb2e7616c
+  checksum: 01f355415353f858c4fd02d8744a76cbf9c52203d06f41d44cb31642311c7860086e4c23b72b72714c5efc9c48e0d00958f4c0e7bbb4fb7d2000c412a456c148
   languageName: node
   linkType: hard
 
@@ -1768,6 +1768,16 @@ __metadata:
     "@types/conventional-commits-parser": ^5.0.0
     chalk: ^5.3.0
   checksum: d1943a5789a02c75b0c72755673ab8d50c850b025abb7806b7eef83b373591948f5d1d9cd22022f89302a256546934d797445913c5c495d8e92711cf17b0fbf0
+  languageName: node
+  linkType: hard
+
+"@commitlint/types@npm:^20.0.0":
+  version: 20.0.0
+  resolution: "@commitlint/types@npm:20.0.0"
+  dependencies:
+    "@types/conventional-commits-parser": ^5.0.0
+    chalk: ^5.3.0
+  checksum: 36c1eec3924f16221c05de0610c2e3073a994c6fa9901d1636c6235b8998c9ad6b3a7981eeb35ae2541d875f08b99b1cdffddd7944ccd0ebca26fba742fba0ac
   languageName: node
   linkType: hard
 
@@ -7333,7 +7343,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "heart-switch-react-native@workspace:."
   dependencies:
-    "@commitlint/config-conventional": ^19.8.1
+    "@commitlint/config-conventional": ^20.0.0
     "@eslint/compat": ^1.3.2
     "@eslint/eslintrc": ^3.3.1
     "@eslint/js": ^9.35.0
