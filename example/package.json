@@ -23,6 +23,6 @@
   "private": true,
   "devDependencies": {
     "react-native-builder-bob": "^0.40.13",
-    "react-native-monorepo-config": "^0.1.9"
+    "react-native-monorepo-config": "^0.3.0"
   }
 }
