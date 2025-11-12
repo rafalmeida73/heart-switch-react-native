@@ -4,6 +4,13 @@
   <img src="https://www.rafaelsantana.dev/img/heartSwitch/ios.gif" alt="heart-switch Demo">
 </div>
 
+<div align="center">
+
+[![npm](https://img.shields.io/npm/v/heart-switch-react-native)]([[https://www.npmjs.com/package/react-native-shadow-2](https://www.npmjs.com/package/heart-switch-react-native)](https://www.npmjs.com/package/heart-switch-react-native))
+[![npm](https://img.shields.io/npm/dt/heart-switch-react-native)]([[https://www.npmjs.com/package/react-native-shadow-2](https://www.npmjs.com/package/heart-switch-react-native)](https://www.npmjs.com/package/heart-switch-react-native))
+
+</div>
+
 <br>
 
 <h1 align="center">heart-switch-react-native</h1>
