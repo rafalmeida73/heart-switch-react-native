@@ -14,7 +14,7 @@
 <br>
 
 <h1 align="center">heart-switch-react-native</h1>
-<h3 align="center">A heart-shaped toggle switch component for React Native. Inspired by  <a href="https://github.com/anatoliygatt/heart-switch">heart-switch</a>
+<h3 align="center">A heart-shaped toggle switch component for React Native/Expo. Inspired by  <a href="https://github.com/anatoliygatt/heart-switch">heart-switch</a>
 
 <br>
 
