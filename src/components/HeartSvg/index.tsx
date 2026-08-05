@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react';
-import Animated, {
-  useSharedValue,
-  withTiming,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
+import { useSharedValue, withTiming } from 'react-native-reanimated';
 import Svg, { Path } from 'react-native-svg';
 import type { IHeartSvgProps } from './types';
-
-const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 export const HeartSvg = ({
   filled,
@@ -26,16 +20,8 @@ export const HeartSvg = ({
     filled ? strokeColor : inactiveStrokeColor
   );
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      opacity: 1,
-    };
-  });
-
   useEffect(() => {
-    progress.value = withTiming(filled ? 1 : 0, {
-      duration,
-    });
+    progress.value = withTiming(filled ? 1 : 0, { duration });
 
     const timer = setTimeout(() => {
       if (filled) {
@@ -59,12 +45,11 @@ export const HeartSvg = ({
   ]);
 
   return (
-    <AnimatedSvg
+    <Svg
       viewBox="0 0 33 23"
       width={36 * size}
       height={25 * size}
       strokeLinejoin="round"
-      style={animatedStyle}
       testID="heart-svg"
     >
       <Path
@@ -74,6 +59,6 @@ export const HeartSvg = ({
         stroke={currentStroke}
         testID="heart-path"
       />
-    </AnimatedSvg>
+    </Svg>
   );
 };

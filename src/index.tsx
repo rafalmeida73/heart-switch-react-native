@@ -34,46 +34,38 @@ export const HeartSwitch = ({
   buttonProps,
   circleProps,
 }: IHeartSwitchProps) => {
-  const initialValues = {
-    sm: {
-      translateX: -9,
-      translateY: 8,
-      rotate: 5,
-      scaleX: 1,
-      differenceY: 8,
-    },
-    md: {
-      translateX: -13.5,
-      translateY: 11.3,
-      rotate: 5,
-      scaleX: 1,
-      differenceY: 12,
-    },
-    lg: {
-      translateX: -18,
-      translateY: 15.5,
-      rotate: 5,
-      scaleX: 1,
-      differenceY: 16,
-    },
-  };
-
   const [heartChecked, setHeartChecked] = useState(checked);
 
-  const initial = initialValues[size];
+  const selectedSize = sizeToScale(size);
 
-  const initialTranslateX = initialValues[size].translateX;
-  const initialTranslateY = initialValues[size].translateY;
-  const easing = Easing.bezier(0.2, 0.8, 0.2, 1);
+  const unchecked = useMemo(
+    () => ({ rotate: 30, translateX: 0, translateY: 0 }),
+    []
+  );
+  const checkedRest = useMemo(
+    () => ({
+      rotate: -30,
+      translateX: 13.5 * selectedSize,
+      translateY: 8 * selectedSize,
+    }),
+    [selectedSize]
+  );
+
+  const linear = Easing.linear;
 
   const d25 = Math.round(duration * 0.25);
   const d50 = duration - d25 - d25;
 
-  const rotate = useSharedValue(initial.rotate);
-  const translateX = useSharedValue(initial.translateX);
-  const translateY = useSharedValue(initial.translateY);
-  const scaleX = useSharedValue(initial.scaleX);
-  const selectedSize = sizeToScale(size);
+  const rotate = useSharedValue(
+    checked ? checkedRest.rotate : unchecked.rotate
+  );
+  const translateX = useSharedValue(
+    checked ? checkedRest.translateX : unchecked.translateX
+  );
+  const translateY = useSharedValue(
+    checked ? checkedRest.translateY : unchecked.translateY
+  );
+  const scaleX = useSharedValue(1);
 
   const handleCallOnChange = useCallback(
     (newChecked: boolean) => {
@@ -100,62 +92,33 @@ export const HeartSwitch = ({
 
   const handleSetChecked = useCallback(
     (newChecked: boolean) => {
+      rotate.value = withSequence(
+        withTiming(unchecked.rotate, { duration: 1 }),
+        withTiming(unchecked.rotate, { duration: d25 * 2 }),
+        withTiming(checkedRest.rotate, { duration: d50, easing: linear })
+      );
+
+      scaleX.value = withSequence(
+        withTiming(1, { duration: 1 }),
+        withTiming(1.1, { duration: d25, easing: linear }),
+        withTiming(1, { duration: d25, easing: linear }),
+        withTiming(1, { duration: d50, easing: linear })
+      );
+
       translateY.value = withSequence(
-        withTiming(initialTranslateY, { duration: 1 }),
-        withTiming(0.3 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(0.9 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(2 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(3 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(3 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(2 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(1 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(0 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(-1.5 * selectedSize + initial.differenceY, {
-          duration: d50,
-          easing,
-        })
+        withTiming(unchecked.translateY, { duration: 1 }),
+        withTiming(unchecked.translateY, { duration: d25, easing: linear }),
+        withTiming(unchecked.translateY, { duration: d25, easing: linear }),
+        withTiming(checkedRest.translateY, { duration: d50, easing: linear })
       );
 
       translateX.value = withSequence(
-        withTiming(initialTranslateX, { duration: 1 }),
-        withTiming(-9 * selectedSize, { duration: d25, easing }),
-        withTiming(-8 * selectedSize, { duration: d25, easing }),
-        withTiming(-6 * selectedSize, { duration: d25, easing }),
-        withTiming(-3 * selectedSize, { duration: d25, easing }),
-        withTiming(1 * selectedSize, { duration: d25, easing }),
-        withTiming(2 * selectedSize, { duration: d25, easing }),
-        withTiming(3 * selectedSize, { duration: d25, easing }),
-        withTiming(4 * selectedSize, { duration: d25, easing }),
+        withTiming(unchecked.translateX, { duration: 1 }),
+        withTiming(4.5 * selectedSize, { duration: d25, easing: linear }),
+        withTiming(9 * selectedSize, { duration: d25, easing: linear }),
         withTiming(
-          6.3 * selectedSize,
-          {
-            duration: d50,
-            easing,
-          },
+          checkedRest.translateX,
+          { duration: d50, easing: linear },
           () => {
             scheduleOnRN(handleCallOnChange, newChecked);
           }
@@ -163,87 +126,75 @@ export const HeartSwitch = ({
       );
     },
     [
+      checkedRest.rotate,
+      checkedRest.translateX,
+      checkedRest.translateY,
       d25,
       d50,
-      easing,
-      initial.differenceY,
-      initialTranslateX,
-      initialTranslateY,
+      linear,
       handleCallOnChange,
+      rotate,
+      scaleX,
       selectedSize,
       translateX,
       translateY,
+      unchecked.rotate,
+      unchecked.translateX,
+      unchecked.translateY,
     ]
   );
 
   const handleSetUnchecked = useCallback(
     (newChecked: boolean) => {
+      rotate.value = withSequence(
+        withTiming(checkedRest.rotate, { duration: 1 }),
+        withTiming(unchecked.rotate, { duration: d50, easing: linear }),
+        withTiming(unchecked.rotate, { duration: d25 * 2 })
+      );
+
+      scaleX.value = withSequence(
+        withTiming(1, { duration: 1 }),
+        withTiming(1, { duration: d50, easing: linear }),
+        withTiming(1.1, { duration: d25, easing: linear }),
+        withTiming(1, { duration: d25, easing: linear })
+      );
+
       translateY.value = withSequence(
-        withTiming(-1 * selectedSize + initial.differenceY, {
-          duration: d50,
-          easing,
-        }),
-        withTiming(0 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(1 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(2 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(3 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(3 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(2 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(0.9 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(0.3 * selectedSize + initial.differenceY, {
-          duration: d25,
-          easing,
-        }),
-        withTiming(initial.translateY, { duration: d50, easing })
+        withTiming(checkedRest.translateY, { duration: 1 }),
+        withTiming(unchecked.translateY, { duration: d50, easing: linear }),
+        withTiming(unchecked.translateY, { duration: d25, easing: linear }),
+        withTiming(unchecked.translateY, { duration: d25, easing: linear })
       );
 
       translateX.value = withSequence(
-        withTiming(5.8 * selectedSize, { duration: d50, easing }),
-        withTiming(4 * selectedSize, { duration: d25, easing }),
-        withTiming(3 * selectedSize, { duration: d25, easing }),
-        withTiming(2 * selectedSize, { duration: d25, easing }),
-        withTiming(1 * selectedSize, { duration: d25, easing }),
-        withTiming(-3 * selectedSize, { duration: d25, easing }),
-        withTiming(-6 * selectedSize, { duration: d25, easing }),
-        withTiming(-8 * selectedSize, { duration: d25, easing }),
-        withTiming(-9 * selectedSize, { duration: d25, easing }),
-        withTiming(initial.translateX, { duration: d50, easing }, () => {
-          scheduleOnRN(handleCallOnChange, newChecked);
-        })
+        withTiming(checkedRest.translateX, { duration: 1 }),
+        withTiming(9 * selectedSize, { duration: d50, easing: linear }),
+        withTiming(4.5 * selectedSize, { duration: d25, easing: linear }),
+        withTiming(
+          unchecked.translateX,
+          { duration: d25, easing: linear },
+          () => {
+            scheduleOnRN(handleCallOnChange, newChecked);
+          }
+        )
       );
     },
     [
+      checkedRest.rotate,
+      checkedRest.translateX,
+      checkedRest.translateY,
       d25,
       d50,
-      easing,
-      initial.differenceY,
-      initial.translateX,
-      initial.translateY,
+      linear,
       handleCallOnChange,
+      rotate,
+      scaleX,
       selectedSize,
       translateX,
       translateY,
+      unchecked.rotate,
+      unchecked.translateX,
+      unchecked.translateY,
     ]
   );
 
@@ -260,6 +211,9 @@ export const HeartSwitch = ({
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
+      position: 'absolute',
+      top: 1 * selectedSize,
+      left: 1 * selectedSize,
       zIndex: 1,
       transform: [
         { rotate: `${rotate.value}deg` },
@@ -272,12 +226,16 @@ export const HeartSwitch = ({
 
   useEffect(() => {
     if (checked && !initialAnimation) {
-      translateX.value = 6.3 * selectedSize;
-      translateY.value = -1.5 * selectedSize + initial.differenceY;
+      rotate.value = checkedRest.rotate;
+      translateX.value = checkedRest.translateX;
+      translateY.value = checkedRest.translateY;
+      scaleX.value = 1;
       setHeartChecked(true);
     } else {
-      translateX.value = initial.translateX;
-      translateY.value = initial.translateY;
+      rotate.value = unchecked.rotate;
+      translateX.value = unchecked.translateX;
+      translateY.value = unchecked.translateY;
+      scaleX.value = 1;
       setHeartChecked(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -309,7 +267,9 @@ export const HeartSwitch = ({
       <TouchableOpacity
         onPress={handlePress}
         disabled={disabled}
+        activeOpacity={1}
         {...buttonProps}
+        style={[{ position: 'relative' }, buttonProps?.style]}
         testID="heart-switch-button"
       >
         <Animated.View style={animatedStyle}>
@@ -319,8 +279,6 @@ export const HeartSwitch = ({
               styles.heartCircle,
               {
                 backgroundColor: getColor.circleColor,
-                top: 12 * selectedSize,
-                left: 12 * selectedSize,
                 width: 18 * selectedSize,
                 height: 18 * selectedSize,
               },
@@ -335,6 +293,7 @@ export const HeartSwitch = ({
           fillColor={getColor.fillColor}
           strokeColor={getColor.strokeColor}
           size={selectedSize}
+          duration={duration}
         />
       </TouchableOpacity>
     </View>

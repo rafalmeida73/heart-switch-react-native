@@ -55,7 +55,7 @@ https://snack.expo.dev/@rafalmeida73/heart-switch-react-native
 
 | Prop                | Type                  | Default value | Description                                                                                           |
 | ------------------- | --------------------- | ------------- | ----------------------------------------------------------------------------------------------------- |
-| size                | string                | `md`          | The size of the toggle switch. Available sizes: `sm`, `md`, `lg`                                      |
+| size                | `'sm' \| 'md' \| 'lg' \| number` | `md` | The size of the toggle switch. Use the `sm`/`md`/`lg` presets, or pass any positive number (e.g. `2.5`) to scale the switch to any size |
 | checked             | boolean               | `false`       | Controls whether the switch is in the "on" (true) or "off" (false) state                              |
 | onChange            | function              | -             | Callback function called when the switch state changes. Receives the new boolean state as a parameter |
 | duration            | number                | `300`         | Duration of the animation in milliseconds when the switch toggles                                     |

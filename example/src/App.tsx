@@ -43,6 +43,12 @@ export default function App() {
           disabledStrokeColor="#c8c8c8"
         />
       </View>
+
+      <View style={[styles.row, { marginTop: 40 }]}>
+        <HeartSwitch size={0.7} checked />
+        <HeartSwitch size={2.75} checked />
+        <HeartSwitch size={4} checked />
+      </View>
     </View>
   );
 }

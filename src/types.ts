@@ -1,6 +1,8 @@
 import type { TouchableOpacityProps, ViewProps } from 'react-native';
 
-export type Size = 'sm' | 'md' | 'lg';
+export type SizePreset = 'sm' | 'md' | 'lg';
+
+export type Size = SizePreset | number;
 
 export interface IHeartSwitchProps {
   size?: Size;
@@ -11,6 +13,7 @@ export interface IHeartSwitchProps {
   strokeColor?: string;
   circleColor?: string;
   checked?: boolean;
+  // eslint-disable-next-line no-unused-vars
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
   disabledFillColor?: string;

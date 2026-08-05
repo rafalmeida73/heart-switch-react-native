@@ -1,11 +1,15 @@
-import type { Size } from '../types';
+import type { Size, SizePreset } from '../types';
 
-export const sizeToScale = (size: Size) => {
-  const sizes = {
-    sm: 1,
-    md: 1.5,
-    lg: 2,
-  };
+const presetScales: Record<SizePreset, number> = {
+  sm: 1,
+  md: 1.5,
+  lg: 2,
+};
 
-  return sizes[size] || sizes.md;
+export const sizeToScale = (size: Size): number => {
+  if (typeof size === 'number') {
+    return size > 0 ? size : presetScales.md;
+  }
+
+  return presetScales[size] ?? presetScales.md;
 };

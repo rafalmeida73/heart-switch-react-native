@@ -39,6 +39,19 @@ describe('HeartSwitch', () => {
     expect(container.props.style[1].width).toBe(36 * sizeToScale(scaleValue));
   });
 
+  it('Should accept any arbitrary numeric size, not just presets.', async () => {
+    const scaleValue = 3.25;
+
+    const { getByTestId } = render(
+      <HeartSwitch checked={true} size={scaleValue} />
+    );
+
+    const container = getByTestId('heart-switch-container');
+
+    expect(container.props.style[1].width).toBe(36 * scaleValue);
+    expect(container.props.style[1].height).toBe(25 * scaleValue);
+  });
+
   it('Should be able to press', async () => {
     const scaleValue = 'lg';
 
